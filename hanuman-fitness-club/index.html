@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanuman Fitness Club | Empowering Strength</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Netlify Identity Widget (for CMS authentication) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        /* (same CSS as before – no changes needed) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #4a4a4a;
+            background-color: #fef8f7;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #7f5a4b;
+        }
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        h2:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background: #d4af37;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #7f5a4b;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f5a4b;
+        }
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(254,248,247,0.85), rgba(250,240,230,0.85)), url('/images/hero-bg.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        .hero-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            color: #7f5a4b;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #4a4a4a;
+        }
+        .btn {
+            display: inline-block;
+            background: #d4af37;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #b8960f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.3);
+        }
+        .services {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: #fef8f7;
+            padding: 40px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+            transition: 0.3s;
+            border: 1px solid #f5e6d3;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(212,175,55,0.1);
+        }
+        .service-card i {
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            margin-bottom: 15px;
+        }
+        .service-card p {
+            font-size: 0.95rem;
+        }
+        .about {
+            padding: 80px 0;
+            background: #faf0e6;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-content p {
+            margin: 20px 0;
+        }
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
+        }
+        .gallery {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 15px;
+            height: 250px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+        .testimonials {
+            padding: 80px 0;
+            background: #fef8f7;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid #f5e6d3;
+            position: relative;
+        }
+        .testimonial-card:before {
+            content: '\201C';
+            font-size: 5rem;
+            color: #d4af37;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+            font-family: serif;
+        }
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .client-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        .client-info h4 {
+            font-size: 1.1rem;
+            color: #7f5a4b;
+        }
+        .contact {
+            padding: 80px 0;
+            background: #faf0e6;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .contact-info p {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contact-info i {
+            color: #d4af37;
+            width: 25px;
+        }
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            border: 0;
+        }
+        .booking {
+            margin-top: 30px;
+        }
+        footer {
+            background: #7f5a4b;
+            color: #fef8f7;
+            text-align: center;
+            padding: 30px 0;
+        }
+        .social-links {
+            margin: 20px 0;
+        }
+        .social-links a {
+            color: #fef8f7;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: #d4af37;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            line-height: 60px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 99;
+            transition: all 0.3s;
+        }
+        .whatsapp-float:hover {
+            background: #128C7E;
+            transform: scale(1.1);
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .map-container iframe {
+                min-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">Hanuman Fitness Club</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Editable) -->
+    <section id="home" class="hero" data-netlify="true" data-hero-bg="/images/hero-bg.jpg">
+        <div class="hero-content container">
+            <h1 data-netlify-field="hero_title">Empower Your Strength,<br>Embrace Your Grace</h1>
+            <p data-netlify-field="hero_subtitle">Where fitness meets elegance – personal training in a supportive, beautiful space.</p>
+            <a href="#contact" class="btn" data-netlify-field="hero_btn_text">Book a Free Trial</a>
+        </div>
+    </section>
+
+    <!-- Services Section (Editable) -->
+    <section id="services" class="services" data-netlify="true">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-netlify-field="services_title">Our Services</h2>
+                <p data-netlify-field="services_subtitle">Tailored to help you shine</p>
+            </div>
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card" data-netlify-item="service1">
+                    <i class="fas fa-dumbbell" data-netlify-icon="service1_icon"></i>
+                    <h3 data-netlify-field="service1_title">Muscle Training</h3>
+                    <p data-netlify-field="service1_desc">Strength coaching with personalized plans – build confidence and tone your body.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="service-card" data-netlify-item="service2">
+                    <i class="fas fa-heartbeat" data-netlify-icon="service2_icon"></i>
+                    <h3 data-netlify-field="service2_title">Cardio</h3>
+                    <p data-netlify-field="service2_desc">Fun, energetic cardio sessions to boost endurance and heart health.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="service-card" data-netlify-item="service3">
+                    <i class="fas fa-users" data-netlify-icon="service3_icon"></i>
+                    <h3 data-netlify-field="service3_title">Personal Coaching</h3>
+                    <p data-netlify-field="service3_desc">One‑on‑one attention from certified trainers who celebrate every win.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (Editable) -->
+    <section id="about" class="about" data-netlify="true">
+        <div class="container about-grid">
+            <div class="about-content">
+                <h2 data-netlify-field="about_title">About Us</h2>
+                <p data-netlify-field="about_text1">At Hanuman Fitness Club, we believe that fitness is a journey of self‑love. Located in the heart of Uslapur, our studio offers a warm, non‑intimidating environment where women (and men!) can achieve their goals.</p>
+                <p data-netlify-field="about_text2">Our trainers are dedicated to helping you find strength, flexibility, and peace – all while having fun. We’re more than a gym; we’re a community.</p>
+                <p data-netlify-field="about_address"><strong>Visit us:</strong> 2nd Floor, Infront of smart point, Mangal plaza, next to Nature view hotel, Uslapur, Bilaspur, Chhattisgarh 495001</p>
+                <a href="#contact" class="btn">Get Directions</a>
+            </div>
+            <div class="about-image">
+                <img src="/images/about.jpg" alt="About us" data-netlify-image="about_image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Editable) -->
+    <section id="gallery" class="gallery" data-netlify="true">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-netlify-field="gallery_title">Gallery</h2>
+                <p data-netlify-field="gallery_subtitle">Moments from our club</p>
+            </div>
+            <div class="gallery-grid" data-netlify-gallery="gallery_images">
+                <div class="gallery-item"><img src="/images/gallery1.jpg" alt="Gallery 1"></div>
+                <div class="gallery-item"><img src="/images/gallery2.jpg" alt="Gallery 2"></div>
+                <div class="gallery-item"><img src="/images/gallery3.jpg" alt="Gallery 3"></div>
+                <div class="gallery-item"><img src="/images/gallery4.jpg" alt="Gallery 4"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section (Editable) -->
+    <section id="testimonials" class="testimonials" data-netlify="true">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-netlify-field="testimonials_title">What Our Clients Say</h2>
+            </div>
+            <div class="testimonial-grid" data-netlify-repeat="testimonials">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <p data-netlify-field="quote1">"The trainers here are so supportive! I never thought I’d enjoy strength training, but now it’s my favorite part of the week."</p>
+                    <div class="client-info">
+                        <img src="/images/client1.jpg" alt="Client" data-netlify-image="client1_photo">
+                        <h4 data-netlify-field="client1_name">Priya Sharma</h4>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <p data-netlify-field="quote2">"A beautiful, clean space with a friendly vibe. The cardio classes are energetic and fun – highly recommend!"</p>
+                    <div class="client-info">
+                        <img src="/images/client2.jpg" alt="Client" data-netlify-image="client2_photo">
+                        <h4 data-netlify-field="client2_name">Anjali Gupta</h4>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <p data-netlify-field="quote3">"I’ve finally found a gym that feels like home. The gold accents and soft lighting make workouts feel luxurious."</p>
+                    <div class="client-info">
+                        <img src="/images/client3.jpg" alt="Client" data-netlify-image="client3_photo">
+                        <h4 data-netlify-field="client3_name">Ritu Verma</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section (Editable) -->
+    <section id="contact" class="contact" data-netlify="true">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-netlify-field="contact_title">Contact Us</h2>
+                <p data-netlify-field="contact_subtitle">We’d love to hear from you</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-netlify-field="address">2nd Floor, Infront of smart point, Mangal plaza, next to Nature view hotel, Uslapur, Bilaspur, Chhattisgarh 495001</span></p>
+                    <p><i class="fas fa-phone-alt"></i> <a href="tel:+9406369397" data-netlify-field="phone">09406369397</a></p>
+                    <p><i class="fas fa-envelope"></i> <span data-netlify-field="email">hello@hanumanfitness.in</span></p>
+                    <div class="booking">
+                        <a href="#" class="btn" data-netlify-field="booking_btn">Book an Appointment</a>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <!-- Replace src with your actual Google Maps embed URL -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.987654321!2d82.141234!3d22.091234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a2f123456789%3A0xabcdef123456!2sMangal%20plaza%2C%20Uslapur!5e0!3m2!1sen!2sin!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Hanuman Fitness Club</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2025 Hanuman Fitness Club. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919406369397?text=Hi%2C%20I'm%20interested%20in%20your%20fitness%20club" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript for mobile menu and smooth scroll -->
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Netlify Identity redirect for CMS
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', user => {
+                if (!user) {
+                    window.netlifyIdentity.on('login', () => {
+                        document.location.href = '/admin/';
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
