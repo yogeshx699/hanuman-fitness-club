@@ -2,74 +2,117 @@ backend:
   name: git-gateway
   branch: main
 
+# Media settings
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
+# Optional publishing workflow (draft → review → publish)
+publish_mode: editorial_workflow
+
+# Site-wide settings
+site_url: "https://yourdomain.com"
+display_url: "https://yourdomain.com"
+
+# Collections
 collections:
-  - name: "home"
-    label: "Home Page"
+
+  # ======================
+  # PAGES (STATIC CONTENT)
+  # ======================
+  - name: "pages"
+    label: "Pages"
     files:
-      - name: "content"
-        label: "Content"
-        file: "index.html"
+
+      - name: "home"
+        label: "Home Page"
+        file: "content/pages/home.md"
         fields:
-          # Hero
-          - { label: "Hero Title", name: "hero_title", widget: "string" }
-          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
-          - { label: "Hero Button Text", name: "hero_btn_text", widget: "string" }
-          - { label: "Hero Background Image", name: "hero_bg", widget: "image" }
-          
-          # Services Section
-          - { label: "Services Title", name: "services_title", widget: "string" }
-          - { label: "Services Subtitle", name: "services_subtitle", widget: "string" }
-          # Service 1
-          - { label: "Service 1 Icon", name: "service1_icon", widget: "string" }
-          - { label: "Service 1 Title", name: "service1_title", widget: "string" }
-          - { label: "Service 1 Description", name: "service1_desc", widget: "text" }
-          # Service 2
-          - { label: "Service 2 Icon", name: "service2_icon", widget: "string" }
-          - { label: "Service 2 Title", name: "service2_title", widget: "string" }
-          - { label: "Service 2 Description", name: "service2_desc", widget: "text" }
-          # Service 3
-          - { label: "Service 3 Icon", name: "service3_icon", widget: "string" }
-          - { label: "Service 3 Title", name: "service3_title", widget: "string" }
-          - { label: "Service 3 Description", name: "service3_desc", widget: "text" }
 
-          # About
-          - { label: "About Title", name: "about_title", widget: "string" }
-          - { label: "About Text 1", name: "about_text1", widget: "text" }
-          - { label: "About Text 2", name: "about_text2", widget: "text" }
-          - { label: "About Address", name: "about_address", widget: "text" }
-          - { label: "About Image", name: "about_image", widget: "image" }
+          # HERO SECTION
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string", required: true }
+              - { label: "Subtitle", name: "subtitle", widget: "text" }
+              - { label: "Background Image", name: "bg_image", widget: "image" }
+              - { label: "CTA Text", name: "cta_text", widget: "string" }
+              - { label: "CTA Link", name: "cta_link", widget: "string" }
 
-          # Gallery
-          - { label: "Gallery Title", name: "gallery_title", widget: "string" }
-          - { label: "Gallery Subtitle", name: "gallery_subtitle", widget: "string" }
-          # For simplicity, we treat each gallery image as a separate field. You can add more if needed.
-          - { label: "Gallery Image 1", name: "gallery_image1", widget: "image" }
-          - { label: "Gallery Image 2", name: "gallery_image2", widget: "image" }
-          - { label: "Gallery Image 3", name: "gallery_image3", widget: "image" }
-          - { label: "Gallery Image 4", name: "gallery_image4", widget: "image" }
+          # ABOUT SECTION
+          - label: "About Section"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Image", name: "image", widget: "image" }
 
-          # Testimonials
-          - { label: "Testimonials Title", name: "testimonials_title", widget: "string" }
-          # Testimonial 1
-          - { label: "Testimonial 1 Quote", name: "quote1", widget: "text" }
-          - { label: "Testimonial 1 Client Photo", name: "client1_photo", widget: "image" }
-          - { label: "Testimonial 1 Client Name", name: "client1_name", widget: "string" }
-          # Testimonial 2
-          - { label: "Testimonial 2 Quote", name: "quote2", widget: "text" }
-          - { label: "Testimonial 2 Client Photo", name: "client2_photo", widget: "image" }
-          - { label: "Testimonial 2 Client Name", name: "client2_name", widget: "string" }
-          # Testimonial 3
-          - { label: "Testimonial 3 Quote", name: "quote3", widget: "text" }
-          - { label: "Testimonial 3 Client Photo", name: "client3_photo", widget: "image" }
-          - { label: "Testimonial 3 Client Name", name: "client3_name", widget: "string" }
+          # SEO SETTINGS
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - { label: "Meta Title", name: "meta_title", widget: "string" }
+              - { label: "Meta Description", name: "meta_description", widget: "text" }
+              - { label: "Keywords", name: "keywords", widget: "list" }
 
-          # Contact
-          - { label: "Contact Title", name: "contact_title", widget: "string" }
-          - { label: "Contact Subtitle", name: "contact_subtitle", widget: "string" }
-          - { label: "Address", name: "address", widget: "text" }
-          - { label: "Phone", name: "phone", widget: "string" }
-          - { label: "Email", name: "email", widget: "string" }
-          - { label: "Booking Button Text", name: "booking_btn", widget: "string" }
+  # ======================
+  # SERVICES COLLECTION
+  # ======================
+  - name: "services"
+    label: "Services"
+    folder: "content/services"
+    create: true
+    slug: "{{slug}}"
+    preview_path: "services/{{slug}}"
+    fields:
+      - { label: "Service Title", name: "title", widget: "string", required: true }
+      - { label: "Slug", name: "slug", widget: "string", required: false }
+      - { label: "Icon (FontAwesome / SVG)", name: "icon", widget: "string" }
+      - { label: "Short Description", name: "description", widget: "text" }
+      - { label: "Detailed Content", name: "body", widget: "markdown" }
+
+  # ======================
+  # TESTIMONIALS
+  # ======================
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Client Name", name: "client_name", widget: "string", required: true }
+      - { label: "Client Photo", name: "client_photo", widget: "image" }
+      - { label: "Rating (1-5)", name: "rating", widget: "number", min: 1, max: 5, default: 5 }
+      - { label: "Feedback", name: "quote", widget: "text" }
+
+  # ======================
+  # GALLERY
+  # ======================
+  - name: "gallery"
+    label: "Gallery"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Image", name: "image", widget: "image", required: true }
+      - { label: "Alt Text (SEO)", name: "alt", widget: "string", required: true }
+      - { label: "Category", name: "category", widget: "string" }
+
+  # ======================
+  # BLOG (OPTIONAL - HIGHLY RECOMMENDED)
+  # ======================
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "blog/{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Featured Image", name: "thumbnail", widget: "image" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Content", name: "body", widget: "markdown" }
+      - { label: "Tags", name: "tags", widget: "list" }
